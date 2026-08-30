@@ -1,25 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 :root {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121a;
-  --bg-glass: rgba(255, 255, 255, 0.03);
-  --bg-glass-hover: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --bg-primary: #151515;
+  --bg-secondary: #252525;
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --bg-glass-hover: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.1);
   
-  --text-primary: #f0f0f5;
-  --text-secondary: #a0a0b0;
+  --text-primary: #FFFFFF;
+  --text-secondary: #F6F3ED;
   
-  --accent-primary: #4ade80; /* Vibrant Green */
-  --accent-secondary: #3b82f6; /* Bright Blue */
-  --accent-error: #ef4444; /* Vivid Red */
-  --accent-warning: #f59e0b;
+  --accent-primary: #FF6A3D;
+  --accent-secondary: #F2542D;
+  --accent-error: #D14727;
+  --accent-warning: #FF8C66;
   
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
   
-  --shadow-glow: 0 0 20px rgba(74, 222, 128, 0.15);
+  --shadow-glow: 0 0 20px rgba(255, 106, 61, 0.2);
 }
 
 * {
@@ -41,7 +41,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
   letter-spacing: -0.02em;
 }

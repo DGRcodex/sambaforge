@@ -41,8 +41,11 @@ export default function SiteFooter() {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '3rem' }}>
           
           <div style={{ maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div className="logo text-gradient" style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'Outfit' }}>
-              Sambalab TechPrep
+            <div className="flex items-center gap-2 mb-2">
+              <Terminal className="text-accent-primary" size={24} />
+              <span className="text-xl font-bold" style={{ fontFamily: 'Playfair Display' }}>
+                La Forja
+              </span>
             </div>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text-secondary)' }}>
               {t.tagline}
@@ -78,9 +81,9 @@ export default function SiteFooter() {
           fontSize: '0.75rem',
           color: 'var(--text-secondary)'
         }}>
-          <span>
-            © {new Date().getFullYear()} Sambalab TechPrep. {t.rights}
-          </span>
+          <div className="text-sm text-gray-500">
+            © {new Date().getFullYear()} La Forja. {t.rights}
+          </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '2rem' }}>
             

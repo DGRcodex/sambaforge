@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Link, Outlet } from 'react-router-dom';
 import { BookOpen, Beaker, Terminal, Home, Book, Code, Globe } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import SiteFooter from './SiteFooter';
@@ -9,9 +9,10 @@ export default function Layout() {
   return (
     <div className="app-container">
       <header className="nav-header" style={{ flexWrap: 'wrap', gap: '1rem' }}>
-        <div className="logo text-gradient" style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'Outfit' }}>
-          PrepTrack
-        </div>
+        <Link to="/" className="text-xl font-bold flex items-center gap-2">
+          <Terminal className="text-accent-primary" size={24} />
+          La Forja
+        </Link>
         <nav className="nav-links" style={{ flexWrap: 'wrap' }}>
           <NavLink to="/" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>
             <Home size={18} /> {lang === 'es' ? 'Inicio' : 'Home'}

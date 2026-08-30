@@ -1,17 +1,17 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/terminal.svg" width="80" alt="TechPrep Logo">
-  <h1>Sambalab TechPrep</h1>
-  <p><strong>Plataforma Open Source de Entrenamiento y Simulacros para Entrevistas Técnicas</strong></p>
+  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/terminal.svg" width="80" alt="La Forja Logo">
+  <h1>La Forja</h1>
+  <p><strong>Plataforma interactiva de entrenamiento y ensayo para entrevistas técnicas del mundo TI</strong></p>
   <p><i>Creative Direction by Sambalab | Engineered by DGRcodex</i></p>
 </div>
 
 ---
 
-## 🚀 ¿Qué es Sambalab TechPrep?
+## 🚀 ¿Qué es La Forja?
 
-**TechPrep** es un simulador de entrevistas técnicas diseñado para erradicar la ansiedad de los desarrolladores antes de enfrentarse a pruebas rigurosas (como las de HackerRank). 
+**La Forja** es una plataforma de entrenamiento diseñada para erradicar la ansiedad de los desarrolladores antes de enfrentarse a pruebas técnicas rigurosas (como las de HackerRank). 
 
-En lugar de leer documentación árida, esta plataforma ofrece un entorno inmersivo con:
+Hemos transformado las clásicas guías de estudio estáticas en una experiencia **gamificada, inmersiva e interactiva** donde el ensayo de código se siente como un juego:
 - 📖 **Módulos de Lectura Interactiva:** Resúmenes arquitectónicos con fragmentos de código ejecutables.
 - 🧪 **Laboratorio de Ensayo (Practice Lab):** Banco de preguntas avanzado con *feedback* instantáneo.
 - 💻 **Retos de Código a Mano (Short Answers):** Editor de código integrado para resolver problemas reales contra una rúbrica de solución arquitectónica.
