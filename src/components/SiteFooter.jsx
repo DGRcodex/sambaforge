@@ -1,4 +1,5 @@
 import { useLanguage } from '../context/LanguageContext';
+import { Terminal } from 'lucide-react';
 
 export default function SiteFooter() {
   const { lang } = useLanguage();
