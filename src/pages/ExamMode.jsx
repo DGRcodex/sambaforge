@@ -89,7 +89,9 @@ export default function ExamMode() {
       score: calculatedScore,
       total: 10,
       timeLeft: timeLeft,
-      lang: lang
+      lang: lang,
+      answers: answers,
+      testSnapshot: activeTest
     };
     pastResults.unshift(newResult); // Add to beginning
     localStorage.setItem('sambaforge_exam_results', JSON.stringify(pastResults));

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { History, Trophy, Clock, Trash2 } from 'lucide-react';
+import { History, Trophy, Clock, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Results() {
   const { lang } = useLanguage();
   const [results, setResults] = useState([]);
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
@@ -41,10 +42,19 @@ export default function Results() {
       clear: 'Clear History',
       date: 'Date',
       score: 'Multiple Choice Score',
-      timeLeft: 'Time Remaining'
+      timeLeft: 'Time Remaining',
+      viewDetails: 'View Details',
+      hideDetails: 'Hide Details',
+      yourAns: 'Your Answer:',
+      idealAns: 'Ideal Answer / BLUF:',
+      noAns: 'Not answered'
     }
   };
   const l = t[lang] || t['es'];
+
+  const toggleExpand = (id) => {
+    setExpandedId(prev => prev === id ? null : id);
+  };
 
   return (
     <div className="fade-in" style={{ maxWidth: '800px', margin: '2rem auto', padding: '0 1rem' }}>
@@ -94,6 +104,53 @@ export default function Results() {
                   </div>
                 </div>
               </div>
+
+              <div style={{ width: '100%', marginTop: '1rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem', display: 'flex', justifyContent: 'center' }}>
+                <button 
+                  onClick={() => toggleExpand(res.id)} 
+                  className="btn" 
+                  style={{ background: 'transparent', color: 'var(--accent-primary)', fontSize: '0.9rem' }}
+                >
+                  {expandedId === res.id ? (
+                    <><ChevronUp size={16} /> {l.hideDetails || 'Ocultar Detalles'}</>
+                  ) : (
+                    <><ChevronDown size={16} /> {l.viewDetails || 'Ver Detalles'}</>
+                  )}
+                </button>
+              </div>
+
+              {expandedId === res.id && res.testSnapshot && (
+                <div className="fade-in" style={{ width: '100%', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--glass-border)' }}>
+                  {Object.keys(res.testSnapshot).map(secKey => {
+                    const writtenQuestions = res.testSnapshot[secKey].filter(q => q.type === 'short' || q.type === 'code');
+                    if (writtenQuestions.length === 0) return null;
+                    
+                    return (
+                      <div key={secKey} style={{ marginBottom: '2rem' }}>
+                        {writtenQuestions.map((q, idx) => (
+                          <div key={q.id} style={{ marginBottom: '1.5rem', background: 'var(--bg-secondary)', padding: '1.25rem', borderRadius: 'var(--radius-sm)' }}>
+                            <p style={{ fontWeight: 600, marginBottom: '1rem', color: 'var(--text-primary)' }}>Q: {q.question}</p>
+                            <div className="responsive-grid">
+                              <div>
+                                <h4 style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.85rem' }}>{l.yourAns || 'Tu Respuesta:'}</h4>
+                                <pre style={{ background: '#050508', padding: '1rem', borderRadius: '4px', whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.85rem', color: res.answers?.[q.id] ? 'var(--text-primary)' : 'var(--accent-error)' }}>
+                                  {res.answers?.[q.id] || (l.noAns || 'No respondida')}
+                                </pre>
+                              </div>
+                              <div>
+                                <h4 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem', fontSize: '0.85rem' }}>{l.idealAns || 'Respuesta Ideal / BLUF:'}</h4>
+                                <pre style={{ background: 'rgba(52, 211, 153, 0.05)', border: '1px solid var(--accent-primary)', padding: '1rem', borderRadius: '4px', whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                  {q.idealAnswer}
+                                </pre>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           ))}
         </div>
