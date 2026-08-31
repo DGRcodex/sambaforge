@@ -1,9 +1,34 @@
 import { useLanguage } from '../context/LanguageContext';
-import { Terminal, Hammer, Plus, BookOpen, Activity } from 'lucide-react';
+import { Terminal, Hammer, Plus, BookOpen, Activity, MessageSquare, Send } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
   const { lang } = useLanguage();
+  const [newTip, setNewTip] = useState('');
+  
+  // Tips simulados (En producción esto vendría de Supabase)
+  const [tips, setTips] = useState([
+    {
+      id: 1,
+      author: 'Daniel',
+      text: 'Aunque te digan que es un "bonus", la parte del código es SIEMPRE la más importante. Siempre haz esa parte primero en la prueba de HackerRank.',
+      date: 'Hace 2 horas'
+    }
+  ]);
+
+  const handleAddTip = (e) => {
+    e.preventDefault();
+    if (!newTip.trim()) return;
+    const tip = {
+      id: Date.now(),
+      author: 'Tú (Aspirante)',
+      text: newTip,
+      date: 'Ahora mismo'
+    };
+    setTips([tip, ...tips]);
+    setNewTip('');
+  };
 
   const t = {
     es: {
@@ -86,6 +111,51 @@ export default function Home() {
           </div>
         </Link>
 
+      </div>
+
+      {/* Community Tips Section */}
+      <div style={{ marginTop: '5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
+          <MessageSquare size={24} color="var(--accent-primary)" />
+          <h3 style={{ fontSize: '1.5rem' }}>{lang === 'es' ? 'Consejos de la Comunidad' : 'Community Tips'}</h3>
+        </div>
+
+        <div className="responsive-grid">
+          {/* Form */}
+          <div className="glass-panel" style={{ padding: '1.5rem' }}>
+            <h4 style={{ marginBottom: '1rem', color: 'var(--text-secondary)' }}>
+              {lang === 'es' ? 'Deja tu consejo para otros forjadores' : 'Leave your tip for other forgers'}
+            </h4>
+            <form onSubmit={handleAddTip} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <textarea
+                value={newTip}
+                onChange={(e) => setNewTip(e.target.value)}
+                placeholder={lang === 'es' ? 'Escribe aquí tu consejo táctico...' : 'Write your tactical advice here...'}
+                style={{
+                  width: '100%', minHeight: '100px', padding: '1rem',
+                  background: 'var(--bg-secondary)', border: '1px solid var(--glass-border)',
+                  borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)', resize: 'vertical'
+                }}
+              />
+              <button type="submit" className="btn btn-outline" style={{ alignSelf: 'flex-end', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Send size={16} /> {lang === 'es' ? 'Publicar Consejo' : 'Post Tip'}
+              </button>
+            </form>
+          </div>
+
+          {/* Tips List */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {tips.map(tip => (
+              <div key={tip.id} className="glass-panel" style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.02)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                  <span style={{ fontWeight: 'bold', color: 'var(--accent-primary)' }}>{tip.author}</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{tip.date}</span>
+                </div>
+                <p style={{ lineHeight: 1.5, color: 'var(--text-primary)' }}>"{tip.text}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
