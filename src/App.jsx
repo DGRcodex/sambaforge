@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import StudyRoom from './pages/StudyRoom';
 import PracticeLab from './pages/PracticeLab';
 import CodeChallenges from './pages/CodeChallenges';
+import Glossary from './pages/Glossary';
 import Setup from './pages/Setup';
 import ExamMode from './pages/ExamMode';
 import Results from './pages/Results';
@@ -30,6 +31,7 @@ function AppContent() {
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route index element={<Home />} />
         <Route path="study" element={<StudyRoom />} />
+        <Route path="glossary" element={<Glossary />} />
         <Route path="practice" element={<PracticeLab />} />
         <Route path="challenges" element={<CodeChallenges />} />
         <Route path="setup" element={<Setup />} />
