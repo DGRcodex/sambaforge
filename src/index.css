@@ -130,6 +130,17 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeIn 0.4s ease-out;
 }
 
+/* Study Room Layout */
+.study-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+.study-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -271,6 +282,14 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .app-container {
     padding: 0 1rem;
+  }
+  
+  .study-layout {
+    flex-direction: column;
+  }
+  
+  .study-sidebar {
+    width: 100% !important;
   }
   
   .nav-header {

@@ -23,10 +23,10 @@ export default function StudyRoom() {
   const t = texts[lang];
 
   return (
-    <div className="fade-in" style={{ display: 'flex', gap: '2rem' }}>
+    <div className="fade-in study-layout">
       
       {/* Sidebar */}
-      <div style={{ width: '300px', flexShrink: 0 }}>
+      <div className="study-sidebar">
         <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem' }}>{t.temario}</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {currentGuide.map((mod) => (
