@@ -1,8 +1,22 @@
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Download, Cpu, Terminal, ExternalLink, Settings } from 'lucide-react';
+import { Download, Cpu, Terminal, ExternalLink, Settings, Key, Check } from 'lucide-react';
 
 export default function Setup() {
   const { lang } = useLanguage();
+  const [apiKey, setApiKey] = useState('');
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    const key = localStorage.getItem('sambaforge_gemini_key');
+    if (key) setApiKey(key);
+  }, []);
+
+  const handleSaveKey = () => {
+    localStorage.setItem('sambaforge_gemini_key', apiKey);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
 
   const texts = {
     es: {
@@ -59,9 +73,43 @@ export default function Setup() {
         <h1 style={{ fontSize: '2.2rem' }}>{texts.title}</h1>
       </div>
       
-      <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', marginBottom: '3rem', lineHeight: 1.6 }}>
+      <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', marginBottom: '2rem', lineHeight: 1.6 }}>
         {texts.subtitle}
       </p>
+
+      {/* API Key Configuration */}
+      <div className="glass-panel" style={{ padding: '2rem', marginBottom: '3rem', border: '1px solid rgba(255, 106, 61, 0.2)', background: 'rgba(255, 106, 61, 0.02)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+          <Key color="var(--accent-primary)" />
+          <h3 style={{ color: 'var(--accent-primary)', fontSize: '1.25rem' }}>{lang === 'es' ? 'Motor de Evaluación IA' : 'AI Evaluation Engine'}</h3>
+        </div>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+          {lang === 'es' 
+            ? 'Para que el sistema evalúe tu razonamiento de forma autónoma (Modo Crockett), necesitas proveer una API Key de Google Gemini gratuita. Se guardará localmente en tu navegador.'
+            : 'To allow the system to evaluate your reasoning autonomously (Crockett Mode), provide a free Google Gemini API Key. It will be securely saved in your browser\'s local storage.'}
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <input 
+            type="password" 
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            placeholder={lang === 'es' ? 'Pega tu Gemini API Key aquí...' : 'Paste your Gemini API Key here...'}
+            style={{ 
+              flex: 1, minWidth: '250px', padding: '0.75rem 1rem', 
+              background: 'var(--bg-secondary)', border: '1px solid var(--glass-border)', 
+              borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)', fontSize: '1rem'
+            }}
+          />
+          <button className="btn btn-primary" onClick={handleSaveKey}>
+            {saved ? <><Check size={16} /> {lang === 'es' ? 'Guardado' : 'Saved'}</> : (lang === 'es' ? 'Guardar Clave' : 'Save Key')}
+          </button>
+        </div>
+        <div style={{ marginTop: '1rem' }}>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', textDecoration: 'underline' }}>
+            {lang === 'es' ? 'Obtener clave gratuita en Google AI Studio' : 'Get a free key at Google AI Studio'}
+          </a>
+        </div>
+      </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         

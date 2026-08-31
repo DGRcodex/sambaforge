@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { History, Trophy, Clock, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { History, Trophy, Clock, Trash2, ChevronDown, ChevronUp, Bot, Loader2, AlertCircle } from 'lucide-react';
+import { evaluateAnswer } from '../utils/aiEvaluator';
 
 export default function Results() {
   const { lang } = useLanguage();
   const [results, setResults] = useState([]);
   const [expandedId, setExpandedId] = useState(null);
+  const [evaluations, setEvaluations] = useState({});
+  const [loadingEvals, setLoadingEvals] = useState({});
+  const [evalError, setEvalError] = useState(null);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
@@ -47,13 +51,37 @@ export default function Results() {
       hideDetails: 'Hide Details',
       yourAns: 'Your Answer:',
       idealAns: 'Ideal Answer / BLUF:',
-      noAns: 'Not answered'
+      noAns: 'Not answered',
+      evalBtn: 'Evaluate with Crockett (AI)',
+      evalWait: 'Analyzing...',
+      missingKey: 'API Key missing. Go to Setup tab to configure it.'
     }
   };
   const l = t[lang] || t['es'];
 
   const toggleExpand = (id) => {
     setExpandedId(prev => prev === id ? null : id);
+    // Clear transient eval state on collapse to save memory if desired, but keeping it is fine.
+  };
+
+  const handleEvaluate = async (qId, questionText, idealAnswer, userAnswer) => {
+    const apiKey = localStorage.getItem('sambaforge_gemini_key');
+    if (!apiKey) {
+      setEvalError(lang === 'es' ? 'Falta API Key. Ve a la pestaña Instalación para configurarla.' : l.missingKey);
+      setTimeout(() => setEvalError(null), 4000);
+      return;
+    }
+
+    setLoadingEvals(prev => ({ ...prev, [qId]: true }));
+    try {
+      const evalText = await evaluateAnswer(questionText, idealAnswer, userAnswer, apiKey, lang);
+      setEvaluations(prev => ({ ...prev, [qId]: evalText }));
+    } catch (err) {
+      setEvalError(err.message);
+      setTimeout(() => setEvalError(null), 4000);
+    } finally {
+      setLoadingEvals(prev => ({ ...prev, [qId]: false }));
+    }
   };
 
   return (
@@ -144,6 +172,32 @@ export default function Results() {
                                 </pre>
                               </div>
                             </div>
+                            
+                            {/* AI Evaluation Section */}
+                            <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem' }}>
+                              {!evaluations[q.id] ? (
+                                <button 
+                                  className="btn btn-outline" 
+                                  onClick={() => handleEvaluate(q.id, q.question, q.idealAnswer, res.answers?.[q.id])}
+                                  disabled={loadingEvals[q.id]}
+                                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', borderColor: 'var(--accent-secondary)', color: 'var(--accent-secondary)' }}
+                                >
+                                  {loadingEvals[q.id] ? <Loader2 size={16} className="spin" /> : <Bot size={16} />}
+                                  {loadingEvals[q.id] ? (l.evalWait || 'Analizando...') : (l.evalBtn || 'Evaluar con Crockett (AI)')}
+                                </button>
+                              ) : (
+                                <div className="fade-in" style={{ background: 'rgba(255, 106, 61, 0.05)', border: '1px solid rgba(255, 106, 61, 0.2)', padding: '1.5rem', borderRadius: 'var(--radius-sm)' }}>
+                                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-primary)', marginBottom: '1rem' }}>
+                                    <Bot size={18} /> Feedback del VP of Engineering
+                                  </h4>
+                                  <div style={{ color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+                                    {evaluations[q.id]}
+                                  </div>
+                                </div>
+                              )}
+                              {evalError && <div style={{ marginTop: '0.75rem', color: 'var(--accent-error)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><AlertCircle size={14} /> {evalError}</div>}
+                            </div>
+
                           </div>
                         ))}
                       </div>
