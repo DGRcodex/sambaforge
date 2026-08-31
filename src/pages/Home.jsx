@@ -7,116 +7,84 @@ export default function Home() {
 
   const t = {
     es: {
-      subtitle: 'Prepárate para la prueba técnica de HackerRank. Domina el entorno Headless, ExtendScript, manipulación de IDML y la automatización de pre-prensa.',
-      studyTitle: 'Módulo de Lectura',
-      studyDesc: 'Repasa la guía de estudio maestra. Historia de ExtendScript y reglas de oro.',
-      studyBtn: 'Comenzar Lectura',
-      practiceTitle: 'Laboratorio de Ensayo',
-      practiceDesc: 'Banco extendido de 20 preguntas con feedback instantáneo. Equivócate aquí para aprender.',
-      practiceBtn: 'Iniciar Ensayo',
-      examTitle: 'Prueba Seria',
-      examDesc: 'Simula el entorno real de HackerRank. Sin feedback durante la prueba.',
-      examBtn: 'Hacer Prueba',
-      glossaryTitle: 'Glosario Técnico',
-      glossaryDesc: 'Diccionario interactivo con todos los términos técnicos de la evaluación.',
-      glossaryBtn: 'Ver Glosario',
-      codeTitle: 'Retos de Código',
-      codeDesc: 'Ejercicios de código abierto para evaluar tu razonamiento backend y ExtendScript.',
-      codeBtn: 'Resolver Retos'
+      title: 'SambaForge Dashboard',
+      subtitle: 'Selecciona una forja de entrenamiento o crea una nueva usando Inteligencia Artificial.',
+      n2Title: 'InDesign Serverless & ExtendScript',
+      n2Desc: 'Simulador técnico basado en los requerimientos de The N2 Company.',
+      n2Meta: '10 Preguntas • 74 Minutos • Dificultad: Senior',
+      forgeTitle: 'Forjar Nuevo Examen',
+      forgeDesc: 'Sube un PDF de requerimientos y la IA creará un test a medida.',
+      forgeMeta: 'Generación por Gemini 1.5 Pro',
+      studyRoom: 'Ir al Temario',
+      takeExam: 'Iniciar Examen'
     },
     en: {
-      title: 'Master InDesign Server',
-      subtitle: 'Prepare for the HackerRank technical test. Master the Headless environment, ExtendScript, IDML manipulation, and prepress automation.',
-      studyTitle: 'Study Room',
-      studyDesc: 'Review the master study guide. ExtendScript history and golden rules.',
-      studyBtn: 'Start Reading',
-      practiceTitle: 'Practice Lab',
-      practiceDesc: 'Extended bank of 20 questions with instant feedback. Make mistakes here to learn.',
-      practiceBtn: 'Start Practice',
-      examTitle: 'Serious Exam',
-      examDesc: 'Simulate the real HackerRank environment. No feedback during the test.',
-      examBtn: 'Take Exam',
-      glossaryTitle: 'Technical Glossary',
-      glossaryDesc: 'Interactive dictionary with all technical terms for the assessment.',
-      glossaryBtn: 'View Glossary',
-      codeTitle: 'Code Challenges',
-      codeDesc: 'Open-ended coding exercises to evaluate your backend and ExtendScript reasoning.',
-      codeBtn: 'Solve Challenges'
+      title: 'SambaForge Dashboard',
+      subtitle: 'Select a training forge or create a new one using Artificial Intelligence.',
+      n2Title: 'InDesign Serverless & ExtendScript',
+      n2Desc: 'Technical simulator based on The N2 Company requirements.',
+      n2Meta: '10 Questions • 74 Minutes • Difficulty: Senior',
+      forgeTitle: 'Forge New Exam',
+      forgeDesc: 'Upload a requirements PDF and AI will create a custom test.',
+      forgeMeta: 'Powered by Gemini 1.5 Pro',
+      studyRoom: 'Study Room',
+      takeExam: 'Take Exam'
     }
   };
-
-  const t = texts[lang];
+  const l = t[lang] || t['es'];
 
   return (
-    <div className="fade-in" style={{ textAlign: 'center', marginTop: '3rem' }}>
-      <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem' }} className="text-gradient">
-        {t.title}
-      </h1>
-      <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto 3rem auto', lineHeight: 1.5 }}>
-        {t.subtitle}
-      </p>
+    <div className="fade-in" style={{ maxWidth: '1000px', margin: '2rem auto', padding: '0 1rem' }}>
+      
+      <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-warning))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          {l.title}
+        </h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
+          {l.subtitle}
+        </p>
+      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', maxWidth: '1100px', margin: '0 auto' }}>
+      <div className="responsive-grid">
         
-        {/* Study */}
-        <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', marginBottom: '1.5rem', color: 'var(--accent-secondary)' }}>
-            <BookOpen size={32} />
+        {/* N2 Company Forge */}
+        <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div style={{ background: 'rgba(52, 211, 153, 0.1)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
+              <Terminal size={32} color="var(--accent-primary)" />
+            </div>
+            <h2 style={{ fontSize: '1.3rem', lineHeight: 1.3 }}>{l.n2Title}</h2>
           </div>
-          <h2 style={{ marginBottom: '1rem' }}>{t.studyTitle}</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', flex: 1 }}>{t.studyDesc}</p>
-          <button className="btn btn-outline" style={{ width: '100%' }} onClick={() => navigate('/study')}>
-            {t.studyBtn}
-          </button>
+          
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', flex: 1 }}>{l.n2Desc}</p>
+          <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Activity size={14} /> {l.n2Meta}
+          </div>
+
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <Link to="/study" className="btn btn-outline" style={{ flex: 1, textAlign: 'center' }}>
+              <BookOpen size={16} /> {l.studyRoom}
+            </Link>
+            <Link to="/exam" className="btn btn-primary" style={{ flex: 1, textAlign: 'center' }}>
+              {l.takeExam}
+            </Link>
+          </div>
         </div>
 
-        {/* Glossary */}
-        <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '1rem', borderRadius: '50%', marginBottom: '1.5rem', color: '#a855f7' }}>
-            <Book size={32} />
+        {/* Create New Forge (AI) */}
+        <Link to="/forge" className="glass-panel hover-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', borderStyle: 'dashed', borderWidth: '2px', borderColor: 'var(--accent-secondary)', textDecoration: 'none', transition: 'all 0.3s ease' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '1rem', borderRadius: 'var(--radius-sm)' }}>
+              <Hammer size={32} color="var(--accent-secondary)" />
+            </div>
+            <h2 style={{ fontSize: '1.3rem', color: 'var(--text-primary)' }}>{l.forgeTitle}</h2>
           </div>
-          <h2 style={{ marginBottom: '1rem' }}>{t.glossaryTitle}</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', flex: 1 }}>{t.glossaryDesc}</p>
-          <button className="btn btn-outline" style={{ width: '100%' }} onClick={() => navigate('/glossary')}>
-            {t.glossaryBtn}
-          </button>
-        </div>
-        
-        {/* Code Challenges */}
-        <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ background: 'rgba(234, 179, 8, 0.1)', padding: '1rem', borderRadius: '50%', marginBottom: '1.5rem', color: '#eab308' }}>
-            <Code size={32} />
+          
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', flex: 1 }}>{l.forgeDesc}</p>
+          <div style={{ fontSize: '0.85rem', color: 'var(--accent-secondary)', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Plus size={14} /> {l.forgeMeta}
           </div>
-          <h2 style={{ marginBottom: '1rem' }}>{t.codeTitle}</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', flex: 1 }}>{t.codeDesc}</p>
-          <button className="btn btn-outline" style={{ width: '100%' }} onClick={() => navigate('/challenges')}>
-            {t.codeBtn}
-          </button>
-        </div>
-
-        {/* Practice */}
-        <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ background: 'rgba(74, 222, 128, 0.1)', padding: '1rem', borderRadius: '50%', marginBottom: '1.5rem', color: 'var(--accent-primary)' }}>
-            <Beaker size={32} />
-          </div>
-          <h2 style={{ marginBottom: '1rem' }}>{t.practiceTitle}</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', flex: 1 }}>{t.practiceDesc}</p>
-          <button className="btn btn-outline" style={{ width: '100%' }} onClick={() => navigate('/practice')}>
-            {t.practiceBtn}
-          </button>
-        </div>
-
-        {/* Exam */}
-        <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ background: 'rgba(239, 68, 68, 0.1)', padding: '1rem', borderRadius: '50%', marginBottom: '1.5rem', color: 'var(--accent-error)' }}>
-            <Terminal size={32} />
-          </div>
-          <h2 style={{ marginBottom: '1rem' }}>{t.examTitle}</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', flex: 1 }}>{t.examDesc}</p>
-          <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate('/exam')}>
-            {t.examBtn}
-          </button>
-        </div>
+        </Link>
 
       </div>
     </div>
