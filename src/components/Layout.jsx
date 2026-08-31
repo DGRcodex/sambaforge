@@ -23,6 +23,9 @@ export default function Layout() {
           <NavLink to="/glossary" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>
             <Book size={18} /> {lang === 'es' ? 'Glosario' : 'Glossary'}
           </NavLink>
+          <NavLink to="/masterclass" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>
+            <BookOpen size={18} /> {lang === 'es' ? 'Master Class' : 'Master Class'}
+          </NavLink>
           <NavLink to="/practice" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>
             <Beaker size={18} /> {lang === 'es' ? 'Ensayo' : 'Practice'}
           </NavLink>
