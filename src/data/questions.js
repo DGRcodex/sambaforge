@@ -102,5 +102,44 @@ export const questions = [
     correctAnswer: 2,
     explanation: 'El índice máximo en un array de longitud N es N-1. Al usar "<=" el bucle intentará acceder a "files[files.length]", lo cual es undefined o null, provocando que el script rompa.',
     category: 'Módulo 5: Depuración (Lab 2)'
+  },
+  {
+    id: 9,
+    question: 'En un entorno headless corporativo, ¿qué línea mitiga la sobrecarga gráfica de renderizado en el backend de InDesign Server?',
+    options: [
+      'app.scriptPreferences.enableRedraw = false;',
+      'app.serverPreferences.suppressGraphicsProcessor = true;',
+      'app.displayPerformancePreferences.realTimeDrawing = false;',
+      'app.documents.everyItem().views.everyItem().screenDrawing = false;'
+    ],
+    correctAnswer: 0,
+    explanation: 'Desactivar el redibujado de pantalla (enableRedraw = false) optimiza radicalmente la CPU al no recalcular la geometría visual de la UI.',
+    category: 'Módulo 1: Arquitectura Headless'
+  },
+  {
+    id: 10,
+    question: 'Si inyectas un payload JSON con un artículo extenso en un objeto `doc.textFrames.itemByName("Body_Layout")`, ¿qué propiedad DOM debes evaluar para verificar desborde de texto de forma precisa?',
+    options: [
+      'targetFrame.contents.overflows',
+      'targetFrame.parentStory.overflows',
+      'targetFrame.overflows',
+      'targetFrame.images.overflows'
+    ],
+    correctAnswer: 1,
+    explanation: 'El contenedor físico (TextFrame) no desborda, quien desborda es el flujo de texto (Story). Por eso se evalúa parentStory.overflows.',
+    category: 'Módulo 2: ExtendScript DOM'
+  },
+  {
+    id: 11,
+    question: 'Durante el desarrollo asíncrono en UXP (.idjs), si ocurre un rechazo en una promesa de exportación (ej. await doc.exportFile()), ¿cuál es la implicación si no está dentro de un bloque try/catch/finally?',
+    options: [
+      'El motor de InDesign corrige el PDF automáticamente.',
+      'El archivo se guarda en la nube de Adobe de emergencia.',
+      'Fuga de memoria silenciosa: la ejecución asíncrona falla y el documento queda abierto en RAM permanentemente.',
+      'El hilo de InDesign Desktop se reinicia solo.'
+    ],
+    correctAnswer: 2,
+    explanation: 'Al no interceptar el fallo de la Promesa y carecer de un bloque finally, el "await doc.close()" nunca se ejecuta, dejando el archivo retenido (File Lock) y consumiendo memoria.',
+    category: 'Módulo 1: Arquitectura Headless'
   }
 ];

@@ -52,6 +52,22 @@ export const glossaryData = {
     {
       term: 'Data Merge',
       definition: 'Fusión de datos. La capacidad nativa de InDesign para mapear registros estructurados (JSON, CSV) contra marcadores o etiquetas en una plantilla pre-diseñada. Sistemas a gran escala producen millones de páginas mensuales basándose fuertemente en este principio.'
+    },
+    {
+      term: 'Dead Letter Queue (DLQ)',
+      definition: 'Cola de aislamiento para separar payloads JSON rotos o IDMLs corruptos sin detener el flujo principal. Si un trabajo de renderizado falla tras múltiples reintentos, se envía a la DLQ para revisión manual.'
+    },
+    {
+      term: 'Backoff Exponencial / Jitter',
+      definition: 'Algoritmo de control de congestión. En lugar de reintentar inmediatamente tras un fallo, incrementa el tiempo de espera exponencialmente e incluye un factor aleatorio (Jitter) para evitar el colapso del servidor (Thundering Herd).'
+    },
+    {
+      term: 'STAR Method',
+      definition: 'Estructura obligatoria para responder entrevistas técnicas en inglés: Situation (Contexto), Task (Desafío Técnico), Action (Solución Arquitectónica), Result (Métricas).'
+    },
+    {
+      term: 'BLUF (Bottom Line Up Front)',
+      definition: 'Metodología de comunicación ejecutiva. Se debe entregar la conclusión, diagnóstico o causa raíz en la primera oración, y luego desglosar los detalles técnicos.'
     }
   ],
   en: [
@@ -107,6 +123,22 @@ export const glossaryData = {
     {
       term: 'Data Merge',
       definition: 'InDesign\'s native capability to map structured records (JSON, CSV) to placeholders or tags in a pre-designed template. Large scale systems produce millions of pages monthly heavily relying on this principle.'
+    },
+    {
+      term: 'Dead Letter Queue (DLQ)',
+      definition: 'Isolation queue to separate broken JSON payloads or corrupt IDMLs without stopping the main flow. If a render job fails after multiple retries, it is sent to the DLQ for manual review.'
+    },
+    {
+      term: 'Exponential Backoff / Jitter',
+      definition: 'Congestion control algorithm. Instead of retrying immediately after a failure, it increases wait time exponentially and includes a random factor (Jitter) to prevent server collapse (Thundering Herd).'
+    },
+    {
+      term: 'STAR Method',
+      definition: 'Mandatory structure for answering technical interviews: Situation (Context), Task (Technical Challenge), Action (Architectural Solution), Result (Metrics).'
+    },
+    {
+      term: 'BLUF (Bottom Line Up Front)',
+      definition: 'Executive communication methodology. The conclusion, diagnosis, or root cause must be delivered in the very first sentence, followed by technical details.'
     }
   ]
 };
