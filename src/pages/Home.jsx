@@ -1,14 +1,12 @@
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { BookOpen, Beaker, Terminal, Code, Book } from 'lucide-react';
+import { Terminal, Hammer, Plus, BookOpen, Activity } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-  const navigate = useNavigate();
   const { lang } = useLanguage();
 
-  const texts = {
+  const t = {
     es: {
-      title: 'Domina InDesign Server',
       subtitle: 'Prepárate para la prueba técnica de HackerRank. Domina el entorno Headless, ExtendScript, manipulación de IDML y la automatización de pre-prensa.',
       studyTitle: 'Módulo de Lectura',
       studyDesc: 'Repasa la guía de estudio maestra. Historia de ExtendScript y reglas de oro.',
