@@ -35,12 +35,22 @@ export const AuthProvider = ({ children }) => {
     if (error) throw error;
   };
 
+  const signInWithOtp = async (email) => {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: window.location.origin
+      }
+    });
+    if (error) throw error;
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithOAuth, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signInWithOAuth, signInWithOtp, signOut }}>
       {!loading && children}
     </AuthContext.Provider>
   );

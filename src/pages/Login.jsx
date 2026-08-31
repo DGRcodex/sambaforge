@@ -1,24 +1,34 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { Mail, Lock, AlertCircle, Code, Briefcase } from 'lucide-react';
+import { Mail, Lock, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 
 export default function Login() {
-  const { user, signInWithOAuth } = useAuth();
+  const { user, signInWithOtp } = useAuth();
   const { lang } = useLanguage();
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   if (user) {
     return <Navigate to="/" replace />;
   }
 
-  const handleLogin = async (provider) => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    
     try {
       setError(null);
-      await signInWithOAuth(provider);
+      setLoading(true);
+      await signInWithOtp(email);
+      setSuccess(true);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,43 +41,59 @@ export default function Login() {
         
         <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>SambaForge</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem' }}>
-          {lang === 'es' ? 'Inicia sesión para acceder a las forjas de entrenamiento.' : 'Log in to access the training forges.'}
+          {lang === 'es' ? 'Ingresa tu correo para recibir un enlace de acceso mágico.' : 'Enter your email to receive a magic login link.'}
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <button 
-            className="btn btn-outline" 
-            onClick={() => handleLogin('github')}
-            style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', padding: '0.85rem' }}
-          >
-            <Code size={20} /> {lang === 'es' ? 'Continuar con GitHub' : 'Continue with GitHub'}
-          </button>
-          
-          <button 
-            className="btn btn-outline" 
-            onClick={() => handleLogin('google')}
-            style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', padding: '0.85rem' }}
-          >
-            <Mail size={20} /> {lang === 'es' ? 'Continuar con Google' : 'Continue with Google'}
-          </button>
-
-          <button 
-            className="btn btn-outline" 
-            onClick={() => handleLogin('linkedin_oidc')}
-            style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', padding: '0.85rem' }}
-          >
-            <Briefcase size={20} /> {lang === 'es' ? 'Continuar con LinkedIn' : 'Continue with LinkedIn'}
-          </button>
-        </div>
+        {success ? (
+          <div style={{ padding: '1.5rem', background: 'rgba(52, 211, 153, 0.1)', border: '1px solid var(--accent-success)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-success)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+            <CheckCircle2 size={32} />
+            <p style={{ fontWeight: 500 }}>
+              {lang === 'es' ? '¡Enlace enviado! Revisa tu bandeja de entrada.' : 'Link sent! Check your inbox.'}
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)', pointerEvents: 'none' }}>
+                <Mail size={20} />
+              </div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@correo.com"
+                required
+                style={{ 
+                  width: '100%', padding: '0.85rem 1rem 0.85rem 3rem', 
+                  background: 'var(--bg-secondary)', border: '1px solid var(--glass-border)', 
+                  borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)', fontSize: '1rem'
+                }}
+              />
+            </div>
+            
+            <button 
+              type="submit"
+              className="btn btn-primary" 
+              disabled={loading || !email}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', padding: '0.85rem' }}
+            >
+              {loading ? <Loader2 size={20} className="spin" /> : null}
+              {lang === 'es' ? 'Enviar Enlace Mágico' : 'Send Magic Link'}
+            </button>
+          </form>
+        )}
 
         {error && (
-          <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'rgba(248, 113, 113, 0.1)', border: '1px solid var(--accent-error)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-error)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', textAlign: 'left' }}>
-            <AlertCircle size={16} /> {error}
+          <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'rgba(248, 113, 113, 0.1)', border: '1px solid var(--accent-error)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-error)', display: 'flex', alignItems: 'flex-start', gap: '0.75rem', fontSize: '0.9rem', textAlign: 'left' }}>
+            <AlertCircle size={20} style={{ flexShrink: 0 }} /> 
+            <div>
+              <strong>Error:</strong> {error}
+            </div>
           </div>
         )}
 
         <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--glass-border)', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          {lang === 'es' ? 'Nota: Requiere configuración de Providers en Supabase.' : 'Note: Requires Providers configuration in Supabase.'}
+          {lang === 'es' ? 'Recibirás un correo sin necesidad de contraseñas.' : 'You will receive an email. No passwords required.'}
         </div>
       </div>
     </div>

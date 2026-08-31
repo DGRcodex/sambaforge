@@ -16,10 +16,9 @@ function ProtectedRoute({ children }) {
   
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'var(--accent-primary)' }}>Loading Auth...</div>;
   
-  // BYPASS TEMPORAL (Modo Invitado Activo)
-  // if (!user) {
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   
   return children;
 }
