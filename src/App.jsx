@@ -7,6 +7,7 @@ import PracticeLab from './pages/PracticeLab';
 import CodeChallenges from './pages/CodeChallenges';
 import Setup from './pages/Setup';
 import ExamMode from './pages/ExamMode';
+import Results from './pages/Results';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="challenges" element={<CodeChallenges />} />
         <Route path="setup" element={<Setup />} />
         <Route path="exam" element={<ExamMode />} />
+        <Route path="results" element={<Results />} />
       </Route>
     </Routes>
   );

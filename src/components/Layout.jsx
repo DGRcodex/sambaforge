@@ -35,6 +35,9 @@ export default function Layout() {
           <NavLink to="/exam" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>
             <Terminal size={18} /> {lang === 'es' ? 'Prueba' : 'Exam'}
           </NavLink>
+          <NavLink to="/results" className={({isActive}) => isActive ? "nav-link active" : "nav-link"}>
+            <BookOpen size={18} /> {lang === 'es' ? 'Resultados' : 'Results'}
+          </NavLink>
         </nav>
         
         <button 

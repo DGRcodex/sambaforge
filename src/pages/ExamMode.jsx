@@ -80,6 +80,19 @@ export default function ExamMode() {
       });
     });
     setScore(calculatedScore);
+
+    // Save to localStorage
+    const pastResults = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
+    const newResult = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      score: calculatedScore,
+      total: 10,
+      timeLeft: timeLeft,
+      lang: lang
+    };
+    pastResults.unshift(newResult); // Add to beginning
+    localStorage.setItem('sambaforge_exam_results', JSON.stringify(pastResults));
   };
 
   const formatTime = (seconds) => {
