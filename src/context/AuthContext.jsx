@@ -46,11 +46,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signOut = async () => {
+    if (user && user.id === 'guest_user') {
+      setUser(null);
+      return;
+    }
     await supabase.auth.signOut();
   };
 
+  const signInAsGuest = () => {
+    setUser({
+      id: 'guest_user',
+      email: 'invitado@sambaforge.com',
+      user_metadata: { name: 'Invitado' }
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithOAuth, signInWithOtp, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signInWithOAuth, signInWithOtp, signOut, signInAsGuest }}>
       {!loading && children}
     </AuthContext.Provider>
   );
