@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { Github, Mail, Linkedin, Lock, AlertCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle, Code, Briefcase } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 
 export default function Login() {
@@ -40,7 +40,7 @@ export default function Login() {
             onClick={() => handleLogin('github')}
             style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', padding: '0.85rem' }}
           >
-            <Github size={20} /> {lang === 'es' ? 'Continuar con GitHub' : 'Continue with GitHub'}
+            <Code size={20} /> {lang === 'es' ? 'Continuar con GitHub' : 'Continue with GitHub'}
           </button>
           
           <button 
@@ -56,7 +56,7 @@ export default function Login() {
             onClick={() => handleLogin('linkedin_oidc')}
             style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', padding: '0.85rem' }}
           >
-            <Linkedin size={20} /> {lang === 'es' ? 'Continuar con LinkedIn' : 'Continue with LinkedIn'}
+            <Briefcase size={20} /> {lang === 'es' ? 'Continuar con LinkedIn' : 'Continue with LinkedIn'}
           </button>
         </div>
 
