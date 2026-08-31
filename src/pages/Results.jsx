@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { History, Trophy, Clock, Trash2, ChevronDown, ChevronUp, Bot, Loader2, AlertCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { evaluateAnswer } from '../utils/aiEvaluator';
 
 export default function Results() {
@@ -10,14 +11,50 @@ export default function Results() {
   const [evaluations, setEvaluations] = useState({});
   const [loadingEvals, setLoadingEvals] = useState({});
   const [evalError, setEvalError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
-    setResults(saved);
+    async function fetchResults() {
+      try {
+        const { data, error } = await supabase
+          .from('exam_results')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        // Mapear los datos de supabase a nuestro formato
+        const mappedData = data.map(item => ({
+          id: item.id,
+          date: item.created_at,
+          score: item.score,
+          total: item.total,
+          timeLeft: item.time_left, // mapeo snake_case a camelCase
+          lang: item.lang,
+          answers: item.answers,
+          testSnapshot: item.test_snapshot
+        }));
+        
+        setResults(mappedData);
+      } catch (error) {
+        console.error('Error fetching from Supabase, falling back to local:', error);
+        const saved = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
+        setResults(saved);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchResults();
   }, []);
 
-  const clearHistory = () => {
-    if (window.confirm(lang === 'es' ? '¿Borrar todo el historial?' : 'Clear all history?')) {
+  const clearHistory = async () => {
+    if (window.confirm(lang === 'es' ? '¿Borrar todo el historial local y de la nube?' : 'Clear all history (cloud and local)?')) {
+      try {
+        await supabase.from('exam_results').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      } catch (err) {
+        console.error('Failed to clear Supabase:', err);
+      }
       localStorage.removeItem('sambaforge_exam_results');
       setResults([]);
     }
@@ -101,7 +138,11 @@ export default function Results() {
         {l.desc}
       </p>
 
-      {results.length === 0 ? (
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '3rem' }}>
+          <Loader2 size={32} className="spin" style={{ color: 'var(--accent-primary)', margin: '0 auto' }} />
+        </div>
+      ) : results.length === 0 ? (
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
           <Trophy size={48} color="var(--text-secondary)" style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
           <p style={{ color: 'var(--text-secondary)' }}>{l.noResults}</p>

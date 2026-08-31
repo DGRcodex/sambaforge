@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { examBank } from '../data/examBank';
+import { supabase } from '../lib/supabase';
 import { useLanguage } from '../context/LanguageContext';
 import { Activity, Trophy, RotateCcw, Clock } from 'lucide-react';
 
@@ -30,6 +31,7 @@ export default function ExamMode() {
   
   const [examStarted, setExamStarted] = useState(false);
   const [examFinished, setExamFinished] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [timeLeft, setTimeLeft] = useState(74 * 60);
   const [activeTest, setActiveTest] = useState({});
@@ -44,11 +46,11 @@ export default function ExamMode() {
       timer = setInterval(() => {
         setTimeLeft(prev => prev - 1);
       }, 1000);
-    } else if (timeLeft === 0 && !examFinished) {
+    } else if (timeLeft === 0 && !examFinished && !isSubmitting) {
       finishExam();
     }
     return () => clearInterval(timer);
-  }, [examStarted, examFinished, timeLeft]);
+  }, [examStarted, examFinished, timeLeft, isSubmitting]);
 
   const handleStart = () => {
     const currentBank = examBank[lang] || examBank['es'];
@@ -69,8 +71,8 @@ export default function ExamMode() {
     setAnswers(prev => ({ ...prev, [qId]: value }));
   };
 
-  const finishExam = () => {
-    setExamFinished(true);
+  const finishExam = async () => {
+    setIsSubmitting(true);
     let calculatedScore = 0;
     SECTIONS.forEach(sec => {
       activeTest[sec.id].forEach(q => {
@@ -81,20 +83,31 @@ export default function ExamMode() {
     });
     setScore(calculatedScore);
 
-    // Save to localStorage
-    const pastResults = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
-    const newResult = {
-      id: Date.now(),
-      date: new Date().toISOString(),
-      score: calculatedScore,
-      total: 10,
-      timeLeft: timeLeft,
-      lang: lang,
-      answers: answers,
-      testSnapshot: activeTest
-    };
-    pastResults.unshift(newResult); // Add to beginning
-    localStorage.setItem('sambaforge_exam_results', JSON.stringify(pastResults));
+    try {
+      const { error } = await supabase
+        .from('exam_results')
+        .insert([
+          {
+            score: calculatedScore,
+            total: 10,
+            time_left: timeLeft,
+            lang: lang,
+            answers: answers,
+            test_snapshot: activeTest
+          }
+        ]);
+      
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error saving to Supabase:', err);
+      // Fallback local guardando si falla
+      const pastResults = JSON.parse(localStorage.getItem('sambaforge_exam_results') || '[]');
+      pastResults.unshift({ id: Date.now(), date: new Date().toISOString(), score: calculatedScore, total: 10, timeLeft: timeLeft, lang, answers, testSnapshot: activeTest });
+      localStorage.setItem('sambaforge_exam_results', JSON.stringify(pastResults));
+    } finally {
+      setIsSubmitting(false);
+      setExamFinished(true);
+    }
   };
 
   const formatTime = (seconds) => {
@@ -274,8 +287,8 @@ export default function ExamMode() {
             <Clock size={24} />
             {formatTime(timeLeft)}
           </div>
-          <button className="btn btn-primary" onClick={finishExam}>
-            {l.submit}
+          <button className="btn btn-primary" onClick={finishExam} disabled={isSubmitting}>
+            {isSubmitting ? '...' : l.submit}
           </button>
         </div>
       </div>
@@ -399,8 +412,8 @@ export default function ExamMode() {
               {l.nextSec}
             </button>
           ) : (
-            <button className="btn btn-primary" onClick={finishExam} style={{ background: 'var(--accent-warning)', color: '#000' }}>
-              {l.finishEval}
+            <button className="btn btn-primary" onClick={finishExam} disabled={isSubmitting} style={{ background: 'var(--accent-warning)', color: '#000' }}>
+              {isSubmitting ? '...' : l.finishEval}
             </button>
           )}
         </div>
