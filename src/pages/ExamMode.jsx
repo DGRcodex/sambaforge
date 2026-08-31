@@ -162,7 +162,7 @@ export default function ExamMode() {
           {l.desc}
         </p>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', textAlign: 'left', marginBottom: '3rem' }}>
+        <div className="responsive-grid" style={{ textAlign: 'left', marginBottom: '3rem' }}>
           <div className="glass-card" style={{ padding: '1.5rem' }}>
             <h3 style={{ color: 'var(--accent-primary)', marginBottom: '0.5rem' }}>{l.struct}</h3>
             <ul style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>
@@ -221,7 +221,7 @@ export default function ExamMode() {
             {activeTest[sec.id]?.map((q, idx) => (
               <div key={q.id} className="glass-card" style={{ padding: '1.5rem', marginBottom: '1rem' }}>
                 <p style={{ fontWeight: 600, marginBottom: '1rem' }}>Q{idx + 1}: {q.question}</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                <div className="responsive-grid">
                   <div>
                     <h4 style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.9rem' }}>{l.yourAns}</h4>
                     <pre style={{ background: 'var(--bg-secondary)', padding: '1rem', borderRadius: '4px', whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.9rem', color: answers[q.id] ? 'var(--text-primary)' : 'var(--accent-danger)' }}>
