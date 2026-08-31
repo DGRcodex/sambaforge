@@ -1,7 +1,37 @@
 import { useState } from 'react';
 import { glossaryData } from '../data/glossaryData';
 import { useLanguage } from '../context/LanguageContext';
-import { Search, Book } from 'lucide-react';
+import { Search, Book, Copy, Check } from 'lucide-react';
+
+function CodeBlock({ code }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div style={{ position: 'relative', marginTop: '1rem', background: '#050508', borderRadius: 'var(--radius-sm)', border: '1px solid var(--glass-border)', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.05)', padding: '0.5rem 1rem', borderBottom: '1px solid var(--glass-border)' }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          ExtendScript Example
+        </span>
+        <button 
+          onClick={handleCopy}
+          style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem' }}
+        >
+          {copied ? <Check size={14} color="var(--accent-primary)" /> : <Copy size={14} />}
+          {copied ? 'Copiado' : 'Copiar'}
+        </button>
+      </div>
+      <pre style={{ padding: '1rem', margin: 0, overflowX: 'auto', fontSize: '0.9rem', color: 'var(--accent-primary)', fontFamily: 'monospace' }}>
+        <code>{code}</code>
+      </pre>
+    </div>
+  );
+}
 
 export default function Glossary() {
   const { lang } = useLanguage();
@@ -53,6 +83,7 @@ export default function Glossary() {
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                 {t.definition}
               </p>
+              {t.codeExample && <CodeBlock code={t.codeExample} />}
             </div>
           ))
         ) : (
