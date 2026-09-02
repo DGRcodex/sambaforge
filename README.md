@@ -1,71 +1,41 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/terminal.svg" width="80" alt="La Forja Logo">
-  <h1>La Forja</h1>
-  <p><strong>Plataforma interactiva de entrenamiento y ensayo para entrevistas técnicas del mundo TI</strong></p>
-  <p><i>Creative Direction by Sambalab | Engineered by DGRcodex</i></p>
-</div>
+# Entorno de Entrenamiento (Sandbox Open Source) 🚀
 
----
+Bienvenido al Entorno de Entrenamiento. Este es un espacio seguro creado para que desarrolladores de todos los niveles puedan aprender, practicar, romper cosas y mejorar sus habilidades trabajando en un entorno real y colaborativo.
 
-## 🚀 ¿Qué es La Forja?
+Aquí no hay preguntas tontas ni muros de pago. Solo código y ganas de aprender.
 
-**La Forja** es una plataforma de entrenamiento diseñada para erradicar la ansiedad de los desarrolladores antes de enfrentarse a pruebas técnicas rigurosas (como las de HackerRank). 
+## 🛠️ Stack Tecnológico
+*(Añade aquí los lenguajes y frameworks que usas en este repositorio)*
+- Lenguaje 1
+- Framework 2
 
-Hemos transformado las clásicas guías de estudio estáticas en una experiencia **gamificada, inmersiva e interactiva** donde el ensayo de código se siente como un juego:
-- 📖 **Módulos de Lectura Interactiva:** Resúmenes arquitectónicos con fragmentos de código ejecutables.
-- 🧪 **Laboratorio de Ensayo (Practice Lab):** Banco de preguntas avanzado con *feedback* instantáneo.
-- 💻 **Retos de Código a Mano (Short Answers):** Editor de código integrado para resolver problemas reales contra una rúbrica de solución arquitectónica.
-- ⏱️ **Modo Examen (Mock Assessment):** Simulacro cronometrado sin feedback, que guarda tu historial de rendimiento localmente.
+## 🚀 ¿Cómo empezar?
 
-El primer *Track* oficial incluido en este repositorio está diseñado específicamente para **InDesign Server Automation, ExtendScript (ES3) y Backend Node.js**, apuntando a roles de alto nivel en automatización editorial (ej. The N2 Company).
+Para tener este entorno corriendo en tu máquina local:
 
-## 🏢 ¿Quiénes Somos? (Acerca de Sambalab)
+1. **Haz un Fork** del repositorio (botón arriba a la derecha en GitHub).
+2. **Clona** tu fork localmente:
+   ```bash
+   git clone https://github.com/TU_USUARIO/TU_REPO.git
+   ```
+3. Instala las dependencias:
+   ```bash
+   npm install # o el comando que aplique
+   ```
+4. Ejecuta el proyecto:
+   ```bash
+   npm run dev # o el comando que aplique
+   ```
 
-**Sambalab** es un laboratorio de innovación digital y diseño estratégico fundado en Santiago de Chile. Creemos firmemente en el poder del **código abierto** y la educación colaborativa. 
+## 🤝 Cómo Contribuir
 
-Creamos herramientas de alto nivel estético y funcional para devolverle valor a la comunidad de desarrolladores. Sabemos que las pruebas técnicas modernas son exhaustivas, por lo que decidimos construir y liberar esta plataforma para que cualquier ingeniero pueda entrenar sus habilidades arquitectónicas en un entorno premium, totalmente gratis.
+¡Nos encanta recibir contribuciones! Si quieres aportar código, arreglar un bug o mejorar la documentación:
+1. Lee nuestra [Guía de Contribución](CONTRIBUTING.md).
+2. Revisa las [Leyes del Repositorio](LEYES_DEL_REPOSITORIO.md) para entender cómo nos organizamos.
+3. Únete a nuestro Discord para hablar con nosotros antes de empezar.
 
-## 🛠️ Stack Tecnológico: ¿Por qué elegimos estas herramientas?
+## 📜 Código de Conducta
+Por favor, asegúrate de leer y seguir nuestro [Código de Conducta](CODE_OF_CONDUCT.md). Queremos mantener este espacio amigable y seguro para todos.
 
-Para construir este simulador, evitamos deliberadamente el sobre-esfuerzo arquitectónico (over-engineering), apostando por la velocidad extrema y una experiencia de usuario (UX) impecable:
-
-1. **React 18 + Vite:** Necesitábamos que la navegación entre la sala de estudio y el examen fuera instantánea (SPA). Vite nos proporciona un *Hot Module Replacement* (HMR) casi instantáneo durante el desarrollo y un *build* optimizado para producción.
-2. **Vanilla CSS (Variables + Glassmorphism):** En lugar de depender fuertemente de Tailwind o bibliotecas de componentes pesadas como Material UI, escribimos un sistema de diseño propio basado en CSS moderno. Esto nos dio control absoluto para crear la estética premium, "oscura" y cristalizada (Glassmorphism) que define a los productos de Sambalab.
-3. **API Context (i18n Nativo):** Toda la aplicación es bilingüe (Inglés/Español). En lugar de usar pesadas librerías de internacionalización, construimos un `LanguageContext` nativo que intercepta diccionarios JSON locales, permitiendo cambiar el idioma de todo el ecosistema sin recargar la vista.
-4. **Local Storage Persistence:** No hay base de datos ni backend acoplado. El historial de exámenes y preferencias de usuario se guardan criptográficamente en el navegador del usuario, lo que permite hostear la plataforma a costo cero en servicios como Vercel o GitHub Pages.
-
-## ⚙️ Instalación y Uso Local
-
-Clonar y correr la plataforma es extremadamente sencillo:
-
-\`\`\`bash
-# 1. Clona el repositorio
-git clone https://github.com/DGRcodex/sambalab-techprep.git
-
-# 2. Entra al directorio
-cd sambalab-techprep
-
-# 3. Instala las dependencias
-npm install
-
-# 4. Inicia el servidor de desarrollo
-npm run dev
-\`\`\`
-
-La plataforma estará disponible en \`http://localhost:5173\`.
-
-## 🤝 Contribuciones y Futuro
-
-La arquitectura está diseñada para ser agnóstica. El objetivo de Sambalab es que la comunidad pueda inyectar nuevos archivos \`Data.js\` para crear *Tracks* de entrenamiento para **React Senior**, **Python Data Engineer**, **AWS Cloud Architect**, etc.
-
-Si deseas contribuir creando un nuevo banco de preguntas o mejorando el motor de renderizado del editor de código, ¡los Pull Requests son bienvenidos!
-
----
-
-<div align="center">
-  <p>Construido con ☕ y ❤️ en Santiago, Chile.</p>
-  <p>
-    <a href="https://sambalab.pro">Sambalab</a> • 
-    <a href="https://dgrcodex.me">DGRcodex</a>
-  </p>
-</div>
+## ⚖️ Licencia
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
