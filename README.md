@@ -1,6 +1,6 @@
 # Entorno de Entrenamiento (Sandbox)
 
-> **Auspiciado por Sambalab y dirigido por [dgrcodex.me](https://dgrcodex.me)**
+> **Auspiciado por [sambalab.pro](https://sambalab.pro) y dirigido por [dgrcodex.me](https://dgrcodex.me)**
 
 Un proyecto Open Source de nivel empresarial diseñado para simular un entorno de desarrollo en tiempo real, permitiendo a los desarrolladores experimentar, fallar y aprender de forma colaborativa bajo estandares rigurosos de la industria.
 
