@@ -1,8 +1,8 @@
 # Entorno de Entrenamiento (Sandbox)
 
-Un proyecto Open Source de nivel empresarial diseñado para simular un entorno de desarrollo en tiempo real, permitiendo a los desarrolladores experimentar, fallar y aprender de forma colaborativa bajo estandares rigurosos de la industria.
+> **Auspiciado por Sambalab y dirigido por [dgrcodex.me](https://dgrcodex.me)**
 
-Auspiciado por Sambalab y dirigido por dgrcodex.me.
+Un proyecto Open Source de nivel empresarial diseñado para simular un entorno de desarrollo en tiempo real, permitiendo a los desarrolladores experimentar, fallar y aprender de forma colaborativa bajo estandares rigurosos de la industria.
 
 ## Arquitectura y Stack Tecnologico
 
